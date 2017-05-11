@@ -15,8 +15,8 @@ def load_data(filepath):
     return words_counter
 
 
-def get_most_frequent_words(words_counter):
-    return [x[0] for x in words_counter.most_common(10)]
+def get_most_frequent_words(words_counter, count):
+    return [x[0] for x in words_counter.most_common(count)]
 
 
 def print_freq_words(word_list):
@@ -24,9 +24,8 @@ def print_freq_words(word_list):
 
 
 if __name__ == '__main__':
-    try:
-        file_name = sys.argv[1]
-    except IndexError:
+    if len(sys.argv) < 2:
         sys.exit('Usage: python lang_frequency.py <path to file>')
+    file_name = sys.argv[1]
     words_counter = load_data(file_name)
-    print_freq_words(get_most_frequent_words(words_counter))
+    print_freq_words(get_most_frequent_words(words_counter, 10))
