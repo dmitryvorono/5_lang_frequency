@@ -8,14 +8,15 @@ import pprint
 def load_data(filepath):
     if not os.path.exists(filepath):
         sys.exit('File does not exists: {0}'.format(filepath))
-    return open(filepath, 'r')
+    with open(filepath, 'r') as file_handler:
+        return make_words_counter(file_handler)
 
 
 def make_words_counter(file_handler):
     words_counter = collections.Counter()
-    for line in file_handler:
-        words = [word.lower() for word in re.split('\W+', line) if word]
-        words_counter.update(words)
+    text_in_file = file_handler.read()
+    words = [word.lower() for word in re.split('\W+', text_in_file) if word]
+    words_counter.update(words)
     return words_counter
 
 
@@ -32,6 +33,5 @@ if __name__ == '__main__':
     count_freq_words = 10
     if len(sys.argv) != count_required_sys_args:
         sys.exit('Usage: python lang_frequency.py <path to file>')
-    file_handler = load_data(sys.argv[1])
-    words_counter = make_words_counter(file_handler)
+    words_counter = load_data(sys.argv[1])
     print_freq_words(get_most_frequent_words(words_counter, count_freq_words))
