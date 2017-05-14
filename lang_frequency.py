@@ -9,7 +9,7 @@ def load_data(filepath):
     if not os.path.exists(filepath):
         sys.exit('File does not exists: {0}'.format(filepath))
     with open(filepath, 'r') as file_handler:
-        return file_handler.read() 
+        return file_handler.read()
 
 
 def make_words_counter(text):
